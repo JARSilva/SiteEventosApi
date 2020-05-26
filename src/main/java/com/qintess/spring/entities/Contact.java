@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_contact")
 public class Contact {
@@ -51,7 +53,8 @@ public class Contact {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
+	
+	@JsonIgnore
 	public Client getClient() {
 		return client;
 	}

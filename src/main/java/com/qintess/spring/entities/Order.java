@@ -1,20 +1,15 @@
 package com.qintess.spring.entities;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,24 +27,38 @@ public class Order{
 	@Column(name = "order_total")
 	private Double total;
 	
-	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@Column(name = "order_qtd")
+	private Integer qtd; 
+	
+	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,  CascadeType.REFRESH})
 	@JoinColumn(name = "client_id")
 	private Client client;
 	
-	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<OrderItem> itens = new HashSet<OrderItem>();
+	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+	@JoinColumn(name = "event_id")
+	private Event event;
 	
 	public Order() {
 		super();
 	}
-
-	public Order(Date orderDate, Double total, Client client) {
+	
+	public Order(Date orderDate, Double total, Integer qtd, Client client, Event event) {
 		super();
 		this.orderDate = orderDate;
 		this.total = total;
+		this.qtd = qtd;
 		this.client = client;
+		this.event = event;
+	}
+	
+	
+	public Event getEvent() {
+		return event;
 	}
 
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 
 	public Date getOrderDate() {
 		return orderDate;
@@ -75,18 +84,8 @@ public class Order{
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
-	public Set<OrderItem> getItens() {
-		return itens;
-	}
-
-
-	public void setOrders(Set<OrderItem> itens) {
-		this.itens = itens;
-	}
 	
-
+	
 	public Client getClient() {
 		return client;
 	}
@@ -95,9 +94,18 @@ public class Order{
 		this.client = client;
 	}
 
+	public Integer getQtd() {
+		return qtd;
+	}
+
+	public void setQtd(Integer qtd) {
+		this.qtd = qtd;
+	}
+
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", orderDate=" + orderDate + ", total=" + total + "]";
+		return "Order [id=" + id + ", orderDate=" + orderDate + ", total=" + total + ", qtd=" + qtd + ", client="
+				+ client + "]";
 	}
 	
 	

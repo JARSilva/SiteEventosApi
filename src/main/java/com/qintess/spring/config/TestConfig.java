@@ -7,13 +7,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.qintess.spring.entities.Client;
+import com.qintess.spring.entities.Contact;
 import com.qintess.spring.entities.Event;
+import com.qintess.spring.entities.Order;
 import com.qintess.spring.entities.Role;
 import com.qintess.spring.entities.ShowHouse;
 import com.qintess.spring.repositories.ClientRepository;
 import com.qintess.spring.repositories.ContactRepository;
 import com.qintess.spring.repositories.EventRepository;
-import com.qintess.spring.repositories.OrderItemRepository;
 import com.qintess.spring.repositories.OrderRepository;
 import com.qintess.spring.repositories.RoleRepository;
 import com.qintess.spring.repositories.ShowHouseRepository;
@@ -38,9 +39,6 @@ public class TestConfig implements CommandLineRunner {
 	private EventRepository eventRepository;
 	
 	@Autowired
-	private OrderItemRepository orderItemRepository;
-	
-	@Autowired
 	private ShowHouseRepository showHouseRepository;
 	
 	@Autowired
@@ -48,7 +46,7 @@ public class TestConfig implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
+		// Testes
 		
 		Role role = new Role("ROLE_CLIENT");
 		
@@ -56,11 +54,32 @@ public class TestConfig implements CommandLineRunner {
 		
 		roleRepository.saveAll(Arrays.asList(role, role1));
 		
-		Client c1 = new Client("Joao", "123", "João", "13213", null, "joãoafon@hotmail.com");
 		
+		
+		Client c1 = new Client("Joao", "123", "João", "13213", null, "joaoafon@hotmail.com");
+		
+		Contact co1 = new Contact("5646564", c1);
+		Contact co2 = new Contact("1111111", c1);
+		Contact co3 = new Contact("4234243", c1);
+		Contact co4 = new Contact("9999999", c1);
 		
 		ShowHouse sh1 = new ShowHouse("Casa", 20, "1212122", "Rui Barbosa", "123", "PG", "SP", c1);
-		c1.getShowHouses().add(sh1);
+		ShowHouse sh2 = new ShowHouse("Segunda Casa", 300, "333333", "Campo Sales", "333", "Santos", "SP", c1);
+		
+		
+		
+		c1.getShowHouses().addAll(Arrays.asList(sh1, sh2));
+		c1.getContacts().addAll(Arrays.asList(co1, co2, co3, co4));
 		clientRepository.save(c1);
+		
+		
+		Event ev1 = new Event("Minha Festa", "Festa pra comemorar algo", "22/04/2001",  null, 20.0, 300,300, c1, sh1);
+	
+		
+		eventRepository.saveAll(Arrays.asList(ev1));
+		
+		Order or1 = new Order(null, 20.0, 5, c1, ev1);	
+		
+		orderRepository.save(or1);
 	}
 }

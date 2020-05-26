@@ -14,8 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_show_house")
@@ -50,7 +51,8 @@ public class ShowHouse implements Serializable {
 
 	@OneToMany(mappedBy = "showHouse", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Event> events = new HashSet<Event>();
-
+	
+	
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "client_id")
 	private Client client;
@@ -97,7 +99,8 @@ public class ShowHouse implements Serializable {
 	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
-
+	
+	@JsonIgnore
 	public Set<Event> getEvents() {
 		return events;
 	}
@@ -105,7 +108,8 @@ public class ShowHouse implements Serializable {
 	public void setEvents(Set<Event> events) {
 		this.events = events;
 	}
-
+	
+	@JsonIgnore
 	public Client getClient() {
 		return client;
 	}

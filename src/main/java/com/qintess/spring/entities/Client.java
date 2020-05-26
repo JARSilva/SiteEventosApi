@@ -1,7 +1,6 @@
 package com.qintess.spring.entities;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_client")
@@ -40,7 +41,7 @@ public class Client {
 	private String cpf;
 	
 	@Column(name = "client_date")
-	private Date birthDate;
+	private String birthDate;
 	
 	@Column(name = "client_email")
 	private String email;
@@ -57,9 +58,6 @@ public class Client {
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Order> orders = new HashSet<Order>();
 	
-	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Cart> cartItens = new HashSet<Cart>();
-	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns =  @JoinColumn(name = "role_id"))
 	private Collection<Role> roles;
@@ -69,7 +67,7 @@ public class Client {
 	}
 
 
-	public Client(String username, String password, String name, String cpf, Date birthDate, String email) {
+	public Client(String username, String password, String name, String cpf, String birthDate, String email) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -79,7 +77,7 @@ public class Client {
 		this.email = email;
 	}
 	
-	public Client(Long id, String username, String password, String name, String cpf, Date birthDate, String email,
+	public Client(Long id, String username, String password, String name, String cpf, String birthDate, String email,
 			Collection<Role> roles) {
 		super();
 		this.id = id;
@@ -117,11 +115,11 @@ public class Client {
 		this.cpf = cpf;
 	}
 
-	public Date getBirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 
@@ -141,7 +139,7 @@ public class Client {
 		this.contacts = contacts;
 	}
 	
-	
+	@JsonIgnore
 	public Set<ShowHouse> getShowHouses() {
 		return showHouses;
 	}
@@ -149,7 +147,8 @@ public class Client {
 	public void setShowHouses(Set<ShowHouse> showHouses) {
 		this.showHouses = showHouses;
 	}
-
+	
+	@JsonIgnore
 	public Set<Event> getEvents() {
 		return events;
 	}
@@ -158,6 +157,7 @@ public class Client {
 		this.events = events;
 	}
 	
+	@JsonIgnore
 	public Set<Order> getOrders() {
 		return orders;
 	}

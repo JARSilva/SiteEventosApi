@@ -1,9 +1,6 @@
 package com.qintess.spring.entities;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.util.Base64;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,10 +12,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_event")
@@ -37,73 +35,47 @@ public class Event implements Serializable {
 	private String description;
 
 	@Column(name = "event_date")
-	private Date date;
-
-	@Column
-	private String imagemEncoded;
-
-	@Lob
-	@Column(columnDefinition = "mediumblob")
-	private byte[] imagemProd;
+	private String date;
+	
+	//url da imagem no projeto angular
+	@Column(name = "image_url")
+    private String imageUrl;
 
 	@Column(name = "event_price")
 	private Double price;
 
 	@Column(name = "event_qtdTicket")
 	private Integer qtdTicket;
+	
+	@Column(name = "event_initialQtdTicket")
+	private Integer initialQtdTicket;
 
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinColumn(name = "client_id")
 	private Client client;
 
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinColumn(name = "house_id")
 	private ShowHouse showHouse;
 
-	@OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<OrderItem> orders = new HashSet<OrderItem>();
-
-	@OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Cart> cartItens = new HashSet<Cart>();
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Order> orders = new HashSet<Order>();
 
 	public Event() {
 	}
 
-	public Event(String name, String description, Date date, Double price, Integer qtdTicket, Client client,
-			ShowHouse showHouse) {
+	public Event(String name, String description, String date, String imageUrl, Double price, Integer qtdTicket,
+			Integer initialQtdTicket, Client client, ShowHouse showHouse) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.date = date;
+		this.imageUrl = imageUrl;
 		this.price = price;
 		this.qtdTicket = qtdTicket;
+		this.initialQtdTicket = initialQtdTicket;
 		this.client = client;
 		this.showHouse = showHouse;
-	}
-
-	public String getImagemEncoded() {
-		try {
-			String base64Encoded;
-			byte[] encodeBase64 = Base64.getEncoder().encode(this.imagemProd);
-			base64Encoded = new String(encodeBase64, "UTF-8");
-			this.imagemEncoded = base64Encoded;
-			return imagemEncoded;
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public byte[] getImagemProd() {
-		return imagemProd;
-	}
-
-	public void setImagemProd(byte[] imagemProd) {
-		this.imagemProd = imagemProd;
-	}
-
-	public void setImagemEncoded(String imagemEncoded) {
-		this.imagemEncoded = imagemEncoded;
 	}
 
 	public Long getId() {
@@ -138,11 +110,11 @@ public class Event implements Serializable {
 		this.showHouse = showHouse;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -161,7 +133,8 @@ public class Event implements Serializable {
 	public void setQtdTicket(Integer qtdTicket) {
 		this.qtdTicket = qtdTicket;
 	}
-
+	
+	@JsonIgnore
 	public Client getClient() {
 		return client;
 	}
@@ -170,30 +143,42 @@ public class Event implements Serializable {
 		this.client = client;
 	}
 
-	public Set<OrderItem> getOrders() {
+	@JsonIgnore
+	public Set<Order> getOrders() {
 		return orders;
 	}
 
-	public void setItens(Set<OrderItem> orders) {
+	
+
+	public Integer getInitialQtdTicket() {
+		return initialQtdTicket;
+	}
+
+
+
+	public void setInitialQtdTicket(Integer initialQtdTicket) {
+		this.initialQtdTicket = initialQtdTicket;
+	}
+
+
+
+	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
 
-	public Set<Cart> getCartItens() {
-		return cartItens;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setCartItens(Set<Cart> cartItens) {
-		this.cartItens = cartItens;
-	}
-
-	public void setOrders(Set<OrderItem> orders) {
-		this.orders = orders;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	@Override
 	public String toString() {
-		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", date=" + date + ", price="
-				+ price + ", qtdTicket=" + qtdTicket + "]";
+		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", date=" + date + ", imageUrl="
+				+ imageUrl + ", price=" + price + ", qtdTicket=" + qtdTicket + ", initialQtdTicket=" + initialQtdTicket
+				+ ", client=" + client + ", showHouse=" + showHouse + "]";
 	}
 
 }
