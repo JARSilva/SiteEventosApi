@@ -63,12 +63,11 @@ public class TestConfig implements CommandLineRunner {
 		Contact co3 = new Contact("4234243", c1);
 		Contact co4 = new Contact("9999999", c1);
 		
-		ShowHouse sh1 = new ShowHouse("Casa", 20, "1212122", "Rui Barbosa", "123", "PG", "SP", c1);
-		ShowHouse sh2 = new ShowHouse("Segunda Casa", 300, "333333", "Campo Sales", "333", "Santos", "SP", c1);
+		ShowHouse sh1 = new ShowHouse("Casa", 20, "1212122", "Rui Barbosa", "123", "PG", "SP");
+		ShowHouse sh2 = new ShowHouse("Segunda Casa", 300, "333333", "Campo Sales", "333", "Santos", "SP");
 		
-		
-		
-		c1.getShowHouses().addAll(Arrays.asList(sh1, sh2));
+		showHouseRepository.saveAll(Arrays.asList(sh1, sh2));
+
 		c1.getContacts().addAll(Arrays.asList(co1, co2, co3, co4));
 		clientRepository.save(c1);
 		
@@ -78,7 +77,7 @@ public class TestConfig implements CommandLineRunner {
 		
 		eventRepository.saveAll(Arrays.asList(ev1));
 		
-		Order or1 = new Order(null, 20.0, 5, c1, ev1);	
+		Order or1 = new Order("28-03-4999", 20.0, 1, c1, ev1);	
 		
 		orderRepository.save(or1);
 	}

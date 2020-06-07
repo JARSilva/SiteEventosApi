@@ -51,18 +51,13 @@ public class ShowHouse implements Serializable {
 
 	@OneToMany(mappedBy = "showHouse", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Event> events = new HashSet<Event>();
-	
-	
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
-	@JoinColumn(name = "client_id")
-	private Client client;
 
 	public ShowHouse() {
 		super();
 	}
 
 	public ShowHouse(String name, Integer capacity, String cep, String address, String number, String city,
-			String state, Client client) {
+			String state) {
 		super();
 		this.name = name;
 		this.capacity = capacity;
@@ -71,7 +66,6 @@ public class ShowHouse implements Serializable {
 		this.number = number;
 		this.city = city;
 		this.state = state;
-		this.client = client;
 	}
 
 
@@ -107,15 +101,6 @@ public class ShowHouse implements Serializable {
 
 	public void setEvents(Set<Event> events) {
 		this.events = events;
-	}
-	
-	@JsonIgnore
-	public Client getClient() {
-		return client;
-	}
-
-	public void setClient(Client client) {
-		this.client = client;
 	}
 	
 	public String getCep() {

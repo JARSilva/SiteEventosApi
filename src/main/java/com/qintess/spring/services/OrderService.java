@@ -23,7 +23,7 @@ public class OrderService {
 		Event event = eventRepository.findById(order.getEvent().getId()).get();
 		if(order.getQtd() > 4 || order.getQtd() <= 0 || order.getQtd() > event.getQtdTicket()) {
 			throw new Exception("Número de ingressos invalido");
-		}else {
+		}else {	
 			event.setQtdTicket(event.getQtdTicket() - order.getQtd());
 			eventRepository.save(event); 
 			return this.orderRepository.save(order);

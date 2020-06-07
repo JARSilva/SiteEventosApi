@@ -22,7 +22,7 @@ public class Order{
 	private Long id;
 	
 	@Column(name = "order_date")
-	private Date orderDate;
+	private String orderDate;
 	
 	@Column(name = "order_total")
 	private Double total;
@@ -42,7 +42,7 @@ public class Order{
 		super();
 	}
 	
-	public Order(Date orderDate, Double total, Integer qtd, Client client, Event event) {
+	public Order(String orderDate, Double total, Integer qtd, Client client, Event event) {
 		super();
 		this.orderDate = orderDate;
 		this.total = total;
@@ -60,11 +60,11 @@ public class Order{
 		this.event = event;
 	}
 
-	public Date getOrderDate() {
+	public String getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
 

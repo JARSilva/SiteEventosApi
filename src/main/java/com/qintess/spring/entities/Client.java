@@ -47,9 +47,6 @@ public class Client {
 	private String email;
 	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<ShowHouse> showHouses = new HashSet<ShowHouse>();
-	
-	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Event> events = new HashSet<Event>();
 	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -137,15 +134,6 @@ public class Client {
 
 	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
-	}
-	
-	@JsonIgnore
-	public Set<ShowHouse> getShowHouses() {
-		return showHouses;
-	}
-
-	public void setShowHouses(Set<ShowHouse> showHouses) {
-		this.showHouses = showHouses;
 	}
 	
 	@JsonIgnore

@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
 @Table(name = "tb_event")
@@ -57,7 +58,7 @@ public class Event implements Serializable {
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinColumn(name = "house_id")
 	private ShowHouse showHouse;
-
+	
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Order> orders = new HashSet<Order>();
 
@@ -134,7 +135,6 @@ public class Event implements Serializable {
 		this.qtdTicket = qtdTicket;
 	}
 	
-	@JsonIgnore
 	public Client getClient() {
 		return client;
 	}
