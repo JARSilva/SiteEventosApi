@@ -30,6 +30,13 @@ public class ClientService {
 	public void deleteById(Long id) {
 		this.clientRepository.deleteById(id);
 	}
+
+	public Client login(Client client) {
+		Client clienteEncontrada = this.clientRepository.findByUsername(client.getUsername());
+		if(client.getPassword().equals(clienteEncontrada.getPassword()))
+			return clienteEncontrada;
+		return null;
+	}
 	
 }
 

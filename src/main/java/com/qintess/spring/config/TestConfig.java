@@ -73,9 +73,11 @@ public class TestConfig implements CommandLineRunner {
 		
 		
 		Event ev1 = new Event("Minha Festa", "Festa pra comemorar algo", "22/04/2001",  null, 20.0, 300,300, c1, sh1);
-	
+		Event ev2 = new Event("Minha Festa2", "Festa pra comemorar algo", "22/04/2001",  null, 20.0, 300,300, c1, sh1);
+		Event ev3 = new Event("Minha Festa3", "Festa pra comemorar algo", "22/04/2001",  null, 20.0, 300,300, c1, sh1);
 		
-		eventRepository.saveAll(Arrays.asList(ev1));
+		
+		eventRepository.saveAll(Arrays.asList(ev1,ev2,ev3));
 		
 		Order or1 = new Order("28-03-4999", 20.0, 1, c1, ev1);	
 		

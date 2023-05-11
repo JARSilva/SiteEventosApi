@@ -37,6 +37,12 @@ public class ClientController {
 		
 		return this.clientService.saveOrUpdate(client);
 	}
+	
+	@PostMapping("/client/login")
+	public Client login(@RequestBody Client client) {
+		
+		return this.clientService.login(client);
+	}
 
 	@PutMapping("/client")
 	public Client update(@RequestBody Client client) {

@@ -7,4 +7,6 @@ import com.qintess.spring.entities.Client;
 
 public interface ClientRepository extends JpaRepository<Client, Long>{
 	
+	Client findByUsername(String username);
+	
 }
