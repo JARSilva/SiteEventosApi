@@ -27,6 +27,11 @@ public class EventController {
 		return this.eventService.findAll();
 	}
 	
+	@GetMapping("/event/all/{id}")
+	public List<Event> findAllByClient(@PathVariable("id") Long id){
+		return this.eventService.findAllByClient(id);
+	}
+	
 	@GetMapping("/event/{id}")
 	public Event findById(@PathVariable("id") Long id) {
 		return this.eventService.findById(id);

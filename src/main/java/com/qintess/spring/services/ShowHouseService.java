@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qintess.spring.entities.Client;
+import com.qintess.spring.entities.Event;
 import com.qintess.spring.entities.ShowHouse;
 import com.qintess.spring.repositories.ShowHouseRepository;
 
@@ -26,6 +28,9 @@ public class ShowHouseService {
 		return this.showHouseRepository.findAll();
 	}
 	
+	public List<ShowHouse> findAllByClient(Client id){
+		return null;
+	}
 	
 	public void deleteById(Long id) {
 		this.showHouseRepository.deleteById(id);
