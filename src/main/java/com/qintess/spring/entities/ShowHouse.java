@@ -47,10 +47,14 @@ public class ShowHouse implements Serializable {
 	private String city;
 	
 	@Column(name = "house_state")
-	public String state;
+	private String state;
 
 	@OneToMany(mappedBy = "showHouse", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Event> events = new HashSet<Event>();
+	
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
+	@JoinColumn(name = "client_id")
+	private Client client;
 
 	public ShowHouse() {
 		super();
@@ -141,6 +145,14 @@ public class ShowHouse implements Serializable {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 	@Override

@@ -66,6 +66,8 @@ public class TestConfig implements CommandLineRunner {
 		ShowHouse sh1 = new ShowHouse("Casa", 20, "1212122", "Rui Barbosa", "123", "PG", "SP");
 		ShowHouse sh2 = new ShowHouse("Segunda Casa", 300, "333333", "Campo Sales", "333", "Santos", "SP");
 		
+		System.out.println(sh1.getName());
+		
 		showHouseRepository.saveAll(Arrays.asList(sh1, sh2));
 
 		c1.getContacts().addAll(Arrays.asList(co1, co2, co3, co4));

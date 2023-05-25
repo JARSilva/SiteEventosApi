@@ -50,6 +50,9 @@ public class Client {
 	private Set<Event> events = new HashSet<Event>();
 	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<ShowHouse> showHouses = new HashSet<ShowHouse>();
+	
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Contact> contacts = new HashSet<Contact>();
 	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

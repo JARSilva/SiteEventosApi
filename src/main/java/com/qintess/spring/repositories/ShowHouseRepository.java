@@ -10,4 +10,5 @@ import com.qintess.spring.entities.ShowHouse;
 
 public interface ShowHouseRepository extends JpaRepository<ShowHouse, Long>{
 	
+	List<ShowHouse> findByClient(Client client);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qintess.spring.entities.Event;
 import com.qintess.spring.entities.ShowHouse;
 import com.qintess.spring.services.ShowHouseService;
 
@@ -25,6 +26,12 @@ public class ShowHouseController {
 	@GetMapping("/showHouse")
 	public List<ShowHouse> findAll(){
 		return this.showHouseService.findAll();
+		
+	}
+	
+	@GetMapping("/showHouse/all/{id}")
+	public List<ShowHouse> findAllByClient(@PathVariable("id") Long id){
+		return this.showHouseService.findAllByClient(id);
 	}
 	
 	@GetMapping("/showHouse/{id}")
