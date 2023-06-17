@@ -39,7 +39,7 @@ public class Event implements Serializable {
 	private String date;
 	
 	//url da imagem no projeto angular
-	@Column(name = "image_url")
+	@Column(name = "image_url", columnDefinition = "VARCHAR(MAX)")
     private String imageUrl;
 
 	@Column(name = "event_price")
